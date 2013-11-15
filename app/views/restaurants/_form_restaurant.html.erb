@@ -1,0 +1,20 @@
+<%= form_for @restaurant do |f| %>
+  <p>
+    <%= f.label "name" %><br>
+    <%= f.text_field "name" %>
+  </p>
+   <p>
+    <%= f.label "address" %><br>
+    <%= f.text_field "address" %>
+  </p>
+    <%= f.label "Neighbourhood" %><br>
+    <%= f.text_field 'neighbourhood' %>
+  </div>
+  <p>
+    <%= f.label "category" %><br>
+    <%= f.collection_select "category_id", options_for_select([Chinese, Mexican, American]) %>
+  </p>
+  <p>
+    <%= f.submit "Save", :class =>'form_button'%> 
+  </p>
+<% end %>
