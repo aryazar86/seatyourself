@@ -1,0 +1,6 @@
+<h1><%= @category.name %></h1>
+<% Restaurant.all.each do |r| %>
+  <% if r.category_id == @category.id %>
+    <%= r.name %><br>
+  <% end %>
+<% end %>
