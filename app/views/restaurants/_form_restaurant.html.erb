@@ -1,18 +1,20 @@
+<% options_arr = Category.all.map {|e| [e.name, e.id]} %>
+
 <%= form_for @restaurant do |f| %>
   <p>
-    <%= f.label "name" %><br>
+    <%= f.label "Name" %><br>
     <%= f.text_field "name" %>
   </p>
    <p>
-    <%= f.label "address" %><br>
+    <%= f.label "Address" %><br>
     <%= f.text_field "address" %>
   </p>
     <%= f.label "Neighbourhood" %><br>
-    <%= f.text_field 'neighbourhood' %>
+    <%= f.text_field "neighbourhood" %>
   </div>
   <p>
-    <%= f.label "category" %><br>
-    <%= f.collection_select "category_id", options_for_select([Chinese, Mexican, American]) %>
+    <%= f.label "Food Category" %><br>
+    <%= f.select("category_id", options_for_select(options_arr)) %>
   </p>
   <p>
     <%= f.submit "Save", :class =>'form_button'%> 

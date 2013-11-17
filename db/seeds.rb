@@ -5,3 +5,19 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+Category.create!(
+  :name => "Chinese"
+)
+
+Category.create!(
+  :name => "Persian"
+)
+
+Category.create!(
+  :name => "Thai"
+)
+
+Category.create!  (
+  :name => "French"
+)

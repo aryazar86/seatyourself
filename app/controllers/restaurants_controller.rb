@@ -1,4 +1,5 @@
 class RestaurantsController < ApplicationController
+	before_filter :require_login, :except => :index
 	def index
 		@restaurants = Restaurant.all
 	end
@@ -8,7 +9,7 @@ class RestaurantsController < ApplicationController
 	end
 
 	def create
-		@restaurant = Restaurant.new
+		@restaurant = Restaurant.new(restaurant_params)
 		if @restaurant.save
 			redirect_to restaurants_path(@restaurant)
 		else
