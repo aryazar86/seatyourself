@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  before_filter :require_login, :only => :show
+
   def new
     @user = User.new
   end
@@ -9,6 +11,14 @@ class UsersController < ApplicationController
       redirect_to root_url, :notice => "Signed up!"
     else
       render :new
+    end
+  end
+
+  def show
+    if current_user.id.to_s == params[:id]
+      @user = User.find(params[:id])
+    else
+      redirect_to user_path(current_user.id)
     end
   end
 

@@ -1,5 +1,6 @@
 class RestaurantsController < ApplicationController
-	before_filter :require_login, :except => :index
+	before_filter :require_login, :except => [:index, :show]
+	
 	def index
 		@restaurants = Restaurant.all
 	end
@@ -32,6 +33,7 @@ class RestaurantsController < ApplicationController
 
 	def show
 		@restaurant = Restaurant.find(params[:id])
+		@reservation = current_user ? @restaurant.reservations.build : nil
 	end
 
 	def destroy

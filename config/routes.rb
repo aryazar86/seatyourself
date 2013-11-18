@@ -1,7 +1,4 @@
 Seatyourself::Application.routes.draw do
-  get "reservations/new"
-  get "reservations/edit"
-  get "reservations/destroy"
   get "logout" => "sessions#destroy", :as => "logout"
   get "login" => "sessions#new", :as => "login"
   get "signup" => "users#new", :as => "signup"
@@ -10,7 +7,12 @@ Seatyourself::Application.routes.draw do
   root :to => "restaurants#index"
 
   resources :categories
-  resources :restaurants
+  # resources :restaurants
+
+  resources :restaurants do
+    resources :reservations, :except => [:index]
+  end
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

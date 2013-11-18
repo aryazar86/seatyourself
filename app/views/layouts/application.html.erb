@@ -11,7 +11,7 @@
    <div id="container">
     <div class="user_nav">
       <% if current_user %>
-        Logged in as <%= current_user.email %>.
+        Logged in as <%= link_to current_user.email, user_path(current_user.id) %>.
         <%= link_to "Log out", logout_path %>
       <% else %>
         <%= link_to "Sign up", signup_path %> or
@@ -23,6 +23,12 @@
     <% end %>
 
 <%= yield %>
+
+
+<br><br>
+
+<%= notice %><br>
+<%= alert %>
 
 </body>
 </html>

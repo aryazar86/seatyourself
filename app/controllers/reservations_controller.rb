@@ -1,14 +1,21 @@
 class ReservationsController < ApplicationController
+  before_filter :load_restaurant
+
   def new
     @reservation = Reservation.new
   end
 
   def create
-    @reservation = Reservation.new(reservation_params)
+    @reservation = @restaurant.reservations.build(reservation_params)
+    @reservation.user_id = current_user.id
+
     if @reservation.save
-      redirect_to reservations_path(@reservation)
+      redirect_to :root
     else
-      render 'new'
+      # @reservation.errors.add(:time_slot)
+      # redirect_to restaurant_path(@restaurant.id)
+
+      render :template => 'restaurants/show'
     end
   end
 
@@ -25,6 +32,10 @@ class ReservationsController < ApplicationController
     end
   end
   
+  def show
+
+  end
+
   def destroy
     @reservation = Reservation.find(params[:id])
     @reservation.destroy
@@ -34,6 +45,12 @@ class ReservationsController < ApplicationController
   private
 
   def reservation_params
-    params.require(:reservation).permit(:restaurant_id, :user_id, :time_slot, :guests)
+    params.require(:reservation).permit(:user_id, :time_slot, :guests)
   end
+
+  def load_restaurant
+    @restaurant = Restaurant.find(params[:restaurant_id])
+  end
+
+
 end

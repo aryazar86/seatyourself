@@ -1,6 +1,34 @@
 <div class="resto">
-	<%= @restaurant.name %>
-	<%= @restaurant.address %>
-	<%= @restaurant.neighbourhood %>
-  <%= @restaurant.category.name %>
+	<h1><%= @restaurant.name %></h1>
+	<div class="address">Address: <%= @restaurant.address %> in <%= @restaurant.neighbourhood %></div>
+  <div class="category">Category: <%= @restaurant.category.name %></div>
 </div>
+
+<% if current_user %> 
+
+  <%= form_for ([@restaurant, @reservation]) do |f| %>
+      <% if @reservation.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@reservation.errors.count, "error") %> prohibited this reservation from being saved:</h2>
+
+        <ul>
+        <% @reservation.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>     <p>
+      <%= f.label "Select Time" %><br>
+      <%= f.datetime_select :time_slot, :ampm => true, :minute_step => 15 %>
+    </p>
+      <%= f.label "Number of Guests" %><br>
+      <%= f.select "guests", options_for_select((1..20).map{|x| ["#{x}", x]} ) %>
+    </p>
+    <p>
+      <%= f.submit "Save", :class =>'form_button'%> 
+    </p>
+  <%end %>
+<% else %>
+
+  Please <%= link_to "login", login_path %> to make a reservation.
+<% end %>

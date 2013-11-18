@@ -18,6 +18,6 @@ Category.create!(
   :name => "Thai"
 )
 
-Category.create!  (
+Category.create!(
   :name => "French"
 )
