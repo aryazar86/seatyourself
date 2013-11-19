@@ -1,9 +1,52 @@
-<div class="Resto_container"> 
-	<% @restaurants.each do |r| %>
-		<div class="resto">
-			<%= r.name %>
-			<%= r.address %>
-			<%= r.neighbourhood %>
-		</div>
-	<% end %>
-</div>
+How would you like to make a reservation?<br>
+
+<% category_arr = Category.all.map { |c| [c.name, c.id] } %>
+
+<%= form_tag(restaurants_path, method: "GET") do %>
+<%= select_tag "category_choices", options_for_select(category_arr) %>  <%= submit_tag "Submit" %>
+<% end %>
+
+<br><br>
+
+<% neighbourhood_arr = Restaurant.all.map { |c| [c.neighbourhood, c.neighbourhood] } %>
+<% neighbourhood_arr.uniq! %>
+
+<%= form_tag(restaurants_path, method: "GET") do %>
+<%= select_tag "neighbourhood_choices", options_for_select(neighbourhood_arr) %>  <%= submit_tag "Submit" %>
+<% end %>
+
+<br><br>
+<% if @category_array %>
+  CATEGORY:
+  <div class="Resto_container"> 
+    <% @category_array.each do |r| %>
+      <div class="resto">
+        <%= link_to r.name, restaurant_path(r.id) %>
+        <%= r.address %>
+        <%= r.neighbourhood %>
+      </div>
+    <% end %>
+  </div>
+
+<% elsif @neighbourhood_array %>
+  NEIGHBOURHOOD:
+  <div class="Resto_container"> 
+    <% @neighbourhood_array.each do |r| %>
+      <div class="resto">
+        <%= link_to r.name, restaurant_path(r.id) %>
+        <%= r.address %>
+      </div>
+    <% end %>
+    
+<% else %>
+  ALL RESTAURANTS:
+  <div class="Resto_container"> 
+  	<% @restaurants.each do |r| %>
+  		<div class="resto">
+  			<%= link_to r.name, restaurant_path(r.id) %>
+  			<%= r.address %>
+  			<%= r.neighbourhood %>
+  		</div>
+  	<% end %>
+  </div>
+<% end %>

@@ -3,6 +3,14 @@ class RestaurantsController < ApplicationController
 	
 	def index
 		@restaurants = Restaurant.all
+
+    if params[:category_choices]
+      @category_array = Category.find(params[:category_choices]).restaurants
+    end
+
+    if params[:neighbourhood_choices]
+      @neighbourhood_array = Restaurant.where("neighbourhood = ?", params[:neighbourhood_choices])
+    end
 	end
 
 	def new

@@ -13,6 +13,9 @@
 
 ActiveRecord::Schema.define(version: 20131117215053) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "categories", force: true do |t|
     t.string   "name"
     t.datetime "created_at"
@@ -47,6 +50,6 @@ ActiveRecord::Schema.define(version: 20131117215053) do
     t.datetime "remember_me_token_expires_at"
   end
 
-  add_index "users", ["remember_me_token"], name: "index_users_on_remember_me_token"
+  add_index "users", ["remember_me_token"], name: "index_users_on_remember_me_token", using: :btree
 
 end

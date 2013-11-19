@@ -9,7 +9,7 @@
   <%= form_for ([@restaurant, @reservation]) do |f| %>
       <% if @reservation.errors.any? %>
       <div id="error_explanation">
-        <h2><%= pluralize(@reservation.errors.count, "error") %> prohibited this reservation from being saved:</h2>
+        <h4> <%= pluralize(@reservation.errors.count, "error") %> prohibited this reservation from being made:</h4>
 
         <ul>
         <% @reservation.errors.full_messages.each do |msg| %>
@@ -19,7 +19,7 @@
       </div>
     <% end %>     <p>
       <%= f.label "Select Time" %><br>
-      <%= f.datetime_select :time_slot, :ampm => true, :minute_step => 15 %>
+      <%= f.datetime_select :time_slot, :ampm => true, :minute_step => 30 %>
     </p>
       <%= f.label "Number of Guests" %><br>
       <%= f.select "guests", options_for_select((1..20).map{|x| ["#{x}", x]} ) %>
