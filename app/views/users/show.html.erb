@@ -1,0 +1,15 @@
+<% if current_user.id.to_s == "#{params[:id]}" %>
+
+<%= @user.email %>
+
+  <p>Your Reservations: </p>
+  <% @user.reservations.each do |r| %>
+    <div>
+    Restaurant name: <%= r.restaurant.name %><br>
+    Time: <%= r.time_slot %><br>
+    Guests: <%= r.guests %><br>
+    </div>
+    <br>
+  <% end %>
+
+<% end %>

@@ -1,13 +1,14 @@
-How would you like to make a reservation?<br>
-
+<h1>How would you like to make a reservation?</h1>
+<br>
+<h2>By Category:</h2>
 <% category_arr = Category.all.map { |c| [c.name, c.id] } %>
 
 <%= form_tag(restaurants_path, method: "GET") do %>
 <%= select_tag "category_choices", options_for_select(category_arr) %>  <%= submit_tag "Submit" %>
 <% end %>
 
-<br><br>
-
+<br>
+<h2>By City:</h2>
 <% neighbourhood_arr = Restaurant.all.map { |c| [c.neighbourhood, c.neighbourhood] } %>
 <% neighbourhood_arr.uniq! %>
 
@@ -39,14 +40,17 @@ How would you like to make a reservation?<br>
     <% end %>
     
 <% else %>
-  ALL RESTAURANTS:
+  <% hour_from_now = (Time.now + 1.hours).strftime("%I%p") %>
+  RESTAURANTS AVAILABLE AT <%= hour_from_now %>:
   <div class="Resto_container"> 
   	<% @restaurants.each do |r| %>
-  		<div class="resto">
-  			<%= link_to r.name, restaurant_path(r.id) %>
-  			<%= r.address %>
-  			<%= r.neighbourhood %>
-  		</div>
+      <% if r.has_space %>
+    		<div class="resto">
+    			<h2><%= link_to r.name, restaurant_path(r.id) %></h2>
+    			Address is: <%= r.address %> in	<%= r.neighbourhood %><br>
+    		</div>
+        <br/>
+      <% end %>
   	<% end %>
   </div>
 <% end %>

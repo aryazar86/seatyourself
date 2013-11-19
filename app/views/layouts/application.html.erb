@@ -8,27 +8,21 @@
 </head>
 <body class="<%= params[:controller] %>">
 
-   <div id="container">
-    <div class="user_nav">
-      <% if current_user %>
-        Logged in as <%= link_to current_user.email, user_path(current_user.id) %>.
-        <%= link_to "Log out", logout_path %>
-      <% else %>
-        <%= link_to "Sign up", signup_path %> or
-        <%= link_to "Log in", login_path  %>.
-      <% end %>
-    </div>
+   <%= render partial: 'layouts/header' %>
+      <div class="page_wrap">
+
+      <div class="container">
+    
     <% flash.each do |name, msg| %>
       <%= content_tag :div, msg, :id => "flash_#{name}" %>
     <% end %>
 
-<%= yield %>
+      </div>
+<div class="container">
+  <%= yield %>
+</div>
 
-
-<br><br>
-
-<%= notice %><br>
-<%= alert %>
+    <%= render partial: 'layouts/footer' %>
 
 </body>
 </html>

@@ -1,4 +1,5 @@
 <div class="resto">
+  <%= image_tag @restaurant.image_url.to_s %>
 	<h1><%= @restaurant.name %></h1>
 	<div class="address">Address: <%= @restaurant.address %> in <%= @restaurant.neighbourhood %></div>
   <div class="category">Category: <%= @restaurant.category.name %></div>

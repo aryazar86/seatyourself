@@ -1,0 +1,29 @@
+
+
+
+
+<div class="header_wrap" id="header">
+  <div class="header">
+    <div class="container" id="navigation">
+      <a href="<%= root_path %>"><div class="logo"><h2>GoSeatYourself</h2></div></a>
+
+            <div class="navbar">
+                <ul class="nav login_out">
+                                                    
+                  <% if current_user %>
+                  
+                    <li><%= link_to (image_tag (current_user.gravitar_url), :class => "header_gravitar"), user_path(current_user.id) %></li>
+                    <li><%= link_to "Sign Out", logout_path %></li>
+
+                  <% else !current_user %>
+
+                    <li><%= link_to "Sign Up!", signup_path %></li>
+                    <li><%= link_to "Sign in", login_path %></li>
+
+                  <% end %>                
+                </ul>
+            </div>
+
+    </div>
+  </div>
+</div>

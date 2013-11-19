@@ -9,4 +9,9 @@ class User < ActiveRecord::Base
   validates_presence_of :password, :on => :create
   validates_presence_of :email
   validates_uniqueness_of :email
+
+  def gravitar_url
+    gravitar = Digest::MD5.hexdigest(email)
+    "http://www.gravatar.com/avatar/#{gravitar}.jpg"
+  end
 end
