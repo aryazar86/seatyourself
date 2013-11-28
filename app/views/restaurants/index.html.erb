@@ -1,24 +1,38 @@
 <h1>How would you like to make a reservation?</h1>
 <br>
-<h2>By Category:</h2>
-<% category_arr = Category.all.map { |c| [c.name, c.id] } %>
+<div style="width:500px; margin:auto">
+  <div style="float:right; text-align:center; margin:auto;">
+    <h2>By Category:</h2><br>
+    <% category_arr = Category.all.map { |c| [c.name, c.id] } %>
 
-<%= form_tag(restaurants_path, method: "GET") do %>
-<%= select_tag "category_choices", options_for_select(category_arr) %>  <%= submit_tag "Submit" %>
-<% end %>
+    <%= form_tag(restaurants_path, method: "GET") do %>
+      <%= select_tag "category_choices", options_for_select(category_arr), class: "zoozoo"%>  <%= submit_tag "Submit" %>
+    <% end %>
+  </div>
 
-<br>
-<h2>By City:</h2>
-<% neighbourhood_arr = Restaurant.all.map { |c| [c.neighbourhood, c.neighbourhood] } %>
-<% neighbourhood_arr.uniq! %>
+  <div style="float:left; text-align:center; margin:auto;">
+    <h2>By City:</h2><br>
+    <% neighbourhood_arr = Restaurant.all.map { |c| [c.neighbourhood, c.neighbourhood] } %>
+    <% neighbourhood_arr.uniq! %>
 
-<%= form_tag(restaurants_path, method: "GET") do %>
-<%= select_tag "neighbourhood_choices", options_for_select(neighbourhood_arr) %>  <%= submit_tag "Submit" %>
-<% end %>
+    <%= form_tag(restaurants_path, method: "GET") do %>
+      <%= select_tag "neighbourhood_choices", options_for_select(neighbourhood_arr) %>  <%= submit_tag "Submit" %>
+    <% end %>
+  </div>
+
+  <div style="float:left; text-align:center; margin:auto;">
+    <h2>By Time:</h2><br>
+    <%= form_tag(restaurants_path, method: "GET") do %>
+      <%= datetime_select :user_time_choices, "time_slot", :ampm => true, :minute_step => 30 %>
+      <%= submit_tag "Submit" %>
+    <% end %>
+  </div>
+</div>
 
 <br><br>
+<div style="clear:both">
 <% if @category_array %>
-  CATEGORY:
+  CATEGORY: <%= Category.find(@category_array.first.category_id).name %>
   <div class="Resto_container"> 
     <% @category_array.each do |r| %>
       <div class="resto">
@@ -30,7 +44,7 @@
   </div>
 
 <% elsif @neighbourhood_array %>
-  NEIGHBOURHOOD:
+  NEIGHBOURHOOD: <%= Restaurant.find(@neighbourhood_array.first).neighbourhood %>
   <div class="Resto_container"> 
     <% @neighbourhood_array.each do |r| %>
       <div class="resto">
@@ -39,12 +53,11 @@
       </div>
     <% end %>
     
-<% else %>
-  <% hour_from_now = (Time.now + 1.hours).strftime("%I%p") %>
-  RESTAURANTS AVAILABLE AT <%= hour_from_now %>:
+<% elsif @user_time_choice %>
+  RESTAURANTS AVAILABLE AT <%= "#{@user_time_choice}" %>:
   <div class="Resto_container"> 
   	<% @restaurants.each do |r| %>
-      <% if r.has_space %>
+      <% if r.has_space(@user_time_choice) %>
     		<div class="resto">
     			<h2><%= link_to r.name, restaurant_path(r.id) %></h2>
     			Address is: <%= r.address %> in	<%= r.neighbourhood %><br>
@@ -54,3 +67,4 @@
   	<% end %>
   </div>
 <% end %>
+</div>

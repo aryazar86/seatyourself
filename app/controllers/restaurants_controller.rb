@@ -6,11 +6,14 @@ class RestaurantsController < ApplicationController
 
     if params[:category_choices]
       @category_array = Category.find(params[:category_choices]).restaurants
-    end
-
-    if params[:neighbourhood_choices]
+		elsif params[:neighbourhood_choices]
       @neighbourhood_array = Restaurant.where("neighbourhood = ?", params[:neighbourhood_choices])
-    end
+	  elsif params[:user_time_choices]
+	  	@user_time_choice = params[:user_time_choices]
+	  else
+	  	@user_time_choice = (Time.now + 1.hours).strftime("%I%p")
+	  end
+
 	end
 
 	def new

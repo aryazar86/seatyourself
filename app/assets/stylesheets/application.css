@@ -12,12 +12,21 @@
  *= require_tree .
  */
 
-/* Fix browser shit */
- * { margin: 0px; padding: 0px; font-family: "ubuntu", sans-serif;}
-html { height: 100%; }
-body { height: 100%; 
-        background: rgba(230,230,220,1);
+.zoozoo select{
+    width:100%;
+    background-color:blue;
+    background-image:none; 
+    -webkit-appearance:none;
+    border:4px solid purple; 
+    box-shadow:none; 
+    padding:0.3em 0.5em;
 }
+
+/* Fix browser shit */
+*  { margin: 0px; padding: 0px; font-family: "ubuntu", sans-serif;}
+html { height: 100%; }
+
+body { height: 100%; background: rgba(230,230,220,1); }
 a {text-decoration: none;}
 
 div {display: block;}
@@ -211,6 +220,7 @@ display: inline-block;}
 .footer_fix {
         height: 100px;
 }
+
 .footer {
         position: absolute;
         height: 80px;

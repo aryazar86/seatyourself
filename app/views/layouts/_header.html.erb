@@ -8,8 +8,13 @@
       <a href="<%= root_path %>"><div class="logo"><h2>GoSeatYourself</h2></div></a>
 
             <div class="navbar">
+
                 <ul class="nav login_out">
-                                                    
+                  <% if flash %>
+                    <% flash.each do |name, msg| %>
+                    <li>  <%= content_tag :div, msg, :id => "flash_#{name}" %></li>
+                    <% end %>
+                  <% end %>
                   <% if current_user %>
                   
                     <li><%= link_to (image_tag (current_user.gravitar_url), :class => "header_gravitar"), user_path(current_user.id) %></li>

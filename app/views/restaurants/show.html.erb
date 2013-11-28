@@ -1,9 +1,10 @@
-<div class="resto">
+<div style="float:left; width:300px;">
   <%= image_tag @restaurant.image_url.to_s %>
-	<h1><%= @restaurant.name %></h1>
-	<div class="address">Address: <%= @restaurant.address %> in <%= @restaurant.neighbourhood %></div>
-  <div class="category">Category: <%= @restaurant.category.name %></div>
 </div>
+<div style="float:right">
+	<h1><%= @restaurant.name %></h1>
+	<p class="address">Address: <%= @restaurant.address %> in <%= @restaurant.neighbourhood %></p>
+  <p class="category">Category: <%= @restaurant.category.name %></p>
 
 <% if current_user %> 
 
@@ -18,12 +19,11 @@
         <% end %>
         </ul>
       </div>
-    <% end %>     <p>
-      <%= f.label "Select Time" %><br>
-      <%= f.datetime_select :time_slot, :ampm => true, :minute_step => 30 %>
+    <% end %> 
+    <p>
+      <%= f.label "Select Time: " %> <%= f.datetime_select :time_slot, :ampm => true, :minute_step => 30 %>
     </p>
-      <%= f.label "Number of Guests" %><br>
-      <%= f.select "guests", options_for_select((1..20).map{|x| ["#{x}", x]} ) %>
+      <%= f.label "Number of Guests: " %> <%= f.select "guests", options_for_select((1..20).map{|x| ["#{x}", x]} ) %>
     </p>
     <p>
       <%= f.submit "Save", :class =>'form_button'%> 
@@ -33,3 +33,4 @@
 
   Please <%= link_to "login", login_path %> to make a reservation.
 <% end %>
+</div>
