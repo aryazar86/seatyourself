@@ -1,19 +1,39 @@
 class RestaurantsController < ApplicationController
 	before_filter :require_login, :except => [:index, :show]
 	
+	
 	def index
-		@restaurants = Restaurant.all
 
-    if params[:category_choices]
-      @category_array = Category.find(params[:category_choices]).restaurants
-		elsif params[:neighbourhood_choices]
-      @neighbourhood_array = Restaurant.where("neighbourhood = ?", params[:neighbourhood_choices])
-	  elsif params[:user_time_choices]
-	  	@user_time_choice = params[:user_time_choices]
-	  else
-	  	@user_time_choice = (Time.now + 1.hours).strftime("%I%p")
+		if(params[:user_time_choices])
+			user_time_choice = DateTime.new(params[:user_time_choices]["time_slot(1i)"].to_i, 
+                        params[:user_time_choices]["time_slot(2i)"].to_i,
+                        params[:user_time_choices]["time_slot(3i)"].to_i,
+                        params[:user_time_choices]["time_slot(4i)"].to_i,
+                        params[:user_time_choices]["time_slot(5i)"].to_i)
+		else
+			user_time_choice = (Time.zone.now + 1.hours).strftime("%I%p")
 	  end
 
+	  @filter_title = "Time: #{user_time_choice}"
+	  @restaurants = Restaurant.all.select{|x| x.has_space(user_time_choice)}
+
+    # respond_to do |format|
+    #   format.js
+    #   format.html 
+    # end
+
+	end
+
+	def by_category
+		@filter_title = Category.find(params[:category_choices].to_i).name
+		@restaurants = Category.find(params[:category_choices]).restaurants
+		render "index"
+	end
+
+	def by_neighbourhood
+		@filter_title = params[:neighbourhood_choices]
+		@restaurants = Restaurant.where("neighbourhood = ?", params[:neighbourhood_choices])
+		render "index"
 	end
 
 	def new

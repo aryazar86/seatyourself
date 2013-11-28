@@ -9,6 +9,9 @@ Seatyourself::Application.routes.draw do
   resources :categories
   # resources :restaurants
 
+  get "restaurants/by_category" => "restaurants#by_category"
+  get "restaurants/by_neighbourhood" => "restaurants#by_neighbourhood"
+
   resources :restaurants do
     resources :reservations, :except => [:index]
   end

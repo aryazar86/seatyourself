@@ -5,7 +5,7 @@
     <h2>By Category:</h2><br>
     <% category_arr = Category.all.map { |c| [c.name, c.id] } %>
 
-    <%= form_tag(restaurants_path, method: "GET") do %>
+    <%= form_tag(restaurants_by_category_path, method: "GET") do %>
       <%= select_tag "category_choices", options_for_select(category_arr), class: "zoozoo"%>  <%= submit_tag "Submit" %>
     <% end %>
   </div>
@@ -15,7 +15,7 @@
     <% neighbourhood_arr = Restaurant.all.map { |c| [c.neighbourhood, c.neighbourhood] } %>
     <% neighbourhood_arr.uniq! %>
 
-    <%= form_tag(restaurants_path, method: "GET") do %>
+    <%= form_tag(restaurants_by_neighbourhood_path, method: "GET") do %>
       <%= select_tag "neighbourhood_choices", options_for_select(neighbourhood_arr) %>  <%= submit_tag "Submit" %>
     <% end %>
   </div>
@@ -31,40 +31,8 @@
 
 <br><br>
 <div style="clear:both">
-<% if @category_array %>
-  CATEGORY: <%= Category.find(@category_array.first.category_id).name %>
   <div class="Resto_container"> 
-    <% @category_array.each do |r| %>
-      <div class="resto">
-        <%= link_to r.name, restaurant_path(r.id) %>
-        <%= r.address %>
-        <%= r.neighbourhood %>
-      </div>
-    <% end %>
+    Filtered by <%= @filter_title %>
+    <%= render @restaurants %>
   </div>
-
-<% elsif @neighbourhood_array %>
-  NEIGHBOURHOOD: <%= Restaurant.find(@neighbourhood_array.first).neighbourhood %>
-  <div class="Resto_container"> 
-    <% @neighbourhood_array.each do |r| %>
-      <div class="resto">
-        <%= link_to r.name, restaurant_path(r.id) %>
-        <%= r.address %>
-      </div>
-    <% end %>
-    
-<% elsif @user_time_choice %>
-  RESTAURANTS AVAILABLE AT <%= "#{@user_time_choice}" %>:
-  <div class="Resto_container"> 
-  	<% @restaurants.each do |r| %>
-      <% if r.has_space(@user_time_choice) %>
-    		<div class="resto">
-    			<h2><%= link_to r.name, restaurant_path(r.id) %></h2>
-    			Address is: <%= r.address %> in	<%= r.neighbourhood %><br>
-    		</div>
-        <br/>
-      <% end %>
-  	<% end %>
-  </div>
-<% end %>
 </div>

@@ -9,7 +9,6 @@ class Restaurant < ActiveRecord::Base
 
   def has_space(user_choice_time)
     total_guests = 0
-    p user_choice_time
     self.reservations.each do |res|
       if res.time_slot == user_choice_time
         total_guests += res.guests
