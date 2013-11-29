@@ -17,18 +17,21 @@ class RestaurantsController < ApplicationController
 	  @filter_title = "Time: #{user_time_choice}"
 	  @restaurants = Restaurant.all.select{|x| x.has_space(user_time_choice)}
 
-    # respond_to do |format|
-    #   format.js
-    #   format.html 
-    # end
-
 	end
 
 	def by_category
-		@filter_title = Category.find(params[:category_choices].to_i).name
-		@restaurants = Category.find(params[:category_choices]).restaurants
-		render "index"
-	end
+		category_choice = Category.find(params[:category_choices].to_i) 
+		@filter_title = category_choice.name
+		@restaurants = category_choice.restaurants
+    
+    respond_to do |format|
+    	# @restaurants.each do |restaurant| 
+    	format.json {render :json => {"hello" => "world!"}}
+    	# end
+      format.html { redirect_to restaurants_path }
+    end	
+
+  end
 
 	def by_neighbourhood
 		@filter_title = params[:neighbourhood_choices]

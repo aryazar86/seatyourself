@@ -5,7 +5,7 @@
     <h2>By Category:</h2><br>
     <% category_arr = Category.all.map { |c| [c.name, c.id] } %>
 
-    <%= form_tag(restaurants_by_category_path, method: "GET") do %>
+    <%= form_tag(restaurants_by_category_path, method: "GET", :remote => true) do %>
       <%= select_tag "category_choices", options_for_select(category_arr), class: "zoozoo"%>  <%= submit_tag "Submit" %>
     <% end %>
   </div>
@@ -15,9 +15,8 @@
     <% neighbourhood_arr = Restaurant.all.map { |c| [c.neighbourhood, c.neighbourhood] } %>
     <% neighbourhood_arr.uniq! %>
 
-    <%= form_tag(restaurants_by_neighbourhood_path, method: "GET") do %>
-      <%= select_tag "neighbourhood_choices", options_for_select(neighbourhood_arr) %>  <%= submit_tag "Submit" %>
-    <% end %>
+    <%= select_tag "neighbourhood_choices", options_for_select(neighbourhood_arr) %>
+    <%= submit_tag "Submit", :id => "neighbourhood_choices_submit", "data-url" => restaurants_by_neighbourhood_path %>
   </div>
 
   <div style="float:left; text-align:center; margin:auto;">
@@ -31,8 +30,9 @@
 
 <br><br>
 <div style="clear:both">
+      Filtered by <span id="filter_title"><%= @filter_title %></span>
+
   <div class="Resto_container"> 
-    Filtered by <%= @filter_title %>
-    <%= render @restaurants %>
+    <%= render :partial => 'restaurant', :object => @restaurants %>
   </div>
 </div>
