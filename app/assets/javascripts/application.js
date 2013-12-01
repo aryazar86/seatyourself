@@ -19,22 +19,16 @@ $(document).ready(function() {
   $('#neighbourhood_choices_submit').on('click', function(event){
     event.preventDefault();
     var neighbourhoodChoice = $('#neighbourhood_choices').val();
-    var url = data("url");
-
-    var _this = this;
+    var url = '/restaurants/by_neighbourhood';
 
     $.ajax({
       url: url,
       dataType: 'script',
-      method: 'GET',
       data: {
-        neighbourhood_choices: neighbourhoodChoice
+        neighbourhood_choice: neighbourhoodChoice
       },
       success: function(result) {
-        $("#my_list").append(result.hello);
-        _this;
-        function(){}
-        update_thumb();
+        eval(result);
       }
     });
   });

@@ -6,7 +6,8 @@
     <% category_arr = Category.all.map { |c| [c.name, c.id] } %>
 
     <%= form_tag(restaurants_by_category_path, method: "GET", :remote => true) do %>
-      <%= select_tag "category_choices", options_for_select(category_arr), class: "zoozoo"%>  <%= submit_tag "Submit" %>
+      <%= select_tag "category_choices", options_for_select(category_arr) %>
+      <%= submit_tag "Submit" %>
     <% end %>
   </div>
 

@@ -25,18 +25,21 @@ class RestaurantsController < ApplicationController
 		@restaurants = category_choice.restaurants
     
     respond_to do |format|
-    	# @restaurants.each do |restaurant| 
-    	format.json {render :json => {"hello" => "world!"}}
-    	# end
+    	format.js {}
       format.html { redirect_to restaurants_path }
-    end	
+    end
 
   end
 
 	def by_neighbourhood
-		@filter_title = params[:neighbourhood_choices]
-		@restaurants = Restaurant.where("neighbourhood = ?", params[:neighbourhood_choices])
-		render "index"
+		@filter_title = params[:neighbourhood_choice]
+		@restaurants = Restaurant.where("neighbourhood = ?", params[:neighbourhood_choice])
+
+    respond_to do |format|
+    	format.js {}
+      format.html { redirect_to restaurants_path }
+    end
+
 	end
 
 	def new
